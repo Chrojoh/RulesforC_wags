@@ -7,11 +7,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Code+Pro:wght@400;600&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:        #0e0c0a;
-    --bg2:       #141210;
-    --bg3:       #1a1714;
-    --border:    #2a2520;
-    --border2:   #332e28;
+    --bg:   #ffffff;
+    --bg2:  #f5f5f5;
+    --bg3:  #000000;
+    --border:  #dddddd;
+    --border2: #cccccc;
     --amber:     #c8860a;
     --amber2:    #f5a623;
     --amber-dim: #c8860a44;
@@ -19,9 +19,9 @@
     --green2:    #4caf73;
     --blue:      #1a4a7a;
     --blue2:     #3a8fd4;
-    --text:      #e8e0d0;
-    --text2:     #a09080;
-    --text3:     #5a5048;
+    --text:      #111111;
+    --text2:     #222222;
+    --text3:     #000000;
     --birch-bg:  #2d4a1e; --birch-b: #6abf45; --birch-t: #a8e063;
     --cyp-bg:    #1e3a4a; --cyp-b:   #45a0bf; --cyp-t:   #63c8e0;
     --clove-bg:  #4a1e2d; --clove-b: #bf4570; --clove-t: #e063a0;
@@ -42,6 +42,7 @@
     padding: 18px 24px;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 16px;
   }
   
@@ -187,8 +188,8 @@
     font-size: 0; /* set by JS */
     transition: background 0.2s;
   }
-  .grid-cell.empty    { background: #0d0b09; }
-  .grid-cell.item     { background: #1a1612; border-color: #2a2420; }
+  .grid-cell.empty { background: #f0f0f0; }
+  .grid-cell.item  { background: #e8e8e8; border-color: #bbbbbb; }
   .grid-cell.handler  {
     background: repeating-linear-gradient(90deg,#f5a62318 0,#f5a62318 4px,transparent 4px,transparent 8px);
     border-top: 2px dashed var(--amber);
@@ -290,17 +291,11 @@
 
 <!-- HEADER -->
 <div class="header">
-  <div class="header-logo">🐕</div>
   <div>
     <div class="header-title">C-WAGS Scent Detective</div>
     <div class="header-sub">Rules & Course Reference — v4.1 · 2024</div>
   </div>
-  <div class="header-badge">
-    15 CLASSES<br>
-    3 SERIES<br>
-    OFFICIAL RULES
-  </div>
-</div>
+ </div>
 
 <!-- TABS -->
 <div class="tabs">
@@ -1222,7 +1217,7 @@ function renderSetupGrid() {
 
   // ── Foot label ──────────────────────────────────────────
   const ftLabel=document.createElement('div');
-  ftLabel.style.cssText='text-align:center;font-family:\'Source Code Pro\',monospace;font-size:9px;color:#3a3530;margin-top:4px;letter-spacing:2px;';
+  ftLabel.style.cssText='text-align:center;font-family:\'Source Code Pro\',monospace;font-size:9px;color:#000000;margin-top:4px;letter-spacing:2px;';
   ftLabel.textContent = cellFt===1 ? 'SCALE: 1 cell = 1 foot' : `SCALE: 1 cell = ${cellFt} feet`;
   container.appendChild(ftLabel);
 

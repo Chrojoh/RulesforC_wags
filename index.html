@@ -291,6 +291,63 @@
   .fade-in { animation: fadeIn 0.25s ease; }
 
   .full-width { grid-column: 1 / -1; }
+
+  /* ══ MOBILE — PHONES ══════════════════════════════════════════ */
+  @media(max-width:600px) {
+    /* ── Header: hide badge, shrink logo & title ── */
+    .header { padding: 10px 12px; gap: 10px; }
+    .header-logo { width: 36px; height: 36px; font-size: 20px; flex-shrink: 0; }
+    .header-title { font-size: 17px; }
+    .header-sub { font-size: 9px; letter-spacing: 1px; }
+    .header-badge { display: none; }
+
+    /* ── Tabs: scrollable, tighter padding ── */
+    .tabs { padding: 0 4px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab { padding: 12px 16px; font-size: 10px; letter-spacing: 1px; white-space: nowrap; flex-shrink: 0; }
+
+    /* ── Page: tighter padding ── */
+    .page { padding: 10px; }
+
+    /* ── Selector labels & buttons ── */
+    .selector-label { font-size: 10px; letter-spacing: 1px; }
+    .btn { padding: 10px 14px; font-size: 11px; touch-action: manipulation; }
+
+    /* ── Rule rows: stack label over value ── */
+    .rule-row { flex-direction: column; gap: 3px; padding: 10px 0; }
+    .rule-label { min-width: unset; font-size: 12px; }
+    .rule-val { text-align: left; font-size: 15px; }
+
+    /* ── Main rules card header: stack title above badges ── */
+    .card-header { flex-direction: column; gap: 10px; }
+    .card-header > div:last-child { align-items: flex-start !important; }
+    .card-title { font-size: 17px; }
+
+    /* ── Tiny labels → readable on mobile ── */
+    .card-code,
+    .grid-title,
+    .side-card-head,
+    .annotation { font-size: 10px; letter-spacing: 1px; }
+
+    /* ── Special rules & pass box ── */
+    .special-rule { font-size: 14px; }
+    .pass-box { font-size: 14px; }
+    .prereq-box { font-size: 12px; }
+
+    /* ── Side panel: slightly larger text ── */
+    .stat-row { font-size: 14px; }
+    .stat-val { font-size: 13px; }
+    .legend-row { font-size: 13px; }
+    .legend-swatch { width: 20px; height: 20px; }
+    .hide-list-item { font-size: 13px; flex-wrap: wrap; }
+
+    /* ── Action buttons: bigger tap targets ── */
+    .btn-primary  { padding: 15px; font-size: 12px; touch-action: manipulation; }
+    .btn-secondary { padding: 13px; font-size: 11px; touch-action: manipulation; }
+
+    /* ── Scent pills: slightly bigger ── */
+    .scent-pill { font-size: 12px; padding: 4px 12px; }
+  }
 </style>
 </head>
 <body>

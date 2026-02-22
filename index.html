@@ -61,12 +61,12 @@
   .tab {
     padding: 14px 22px;
     font-family: 'Source Code Pro', monospace;
-    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--text3); cursor: pointer;
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600;
+    color: var(--text2); cursor: pointer;
     border-bottom: 2px solid transparent;
     transition: all 0.15s;
   }
-  .tab:hover { color: var(--text2); }
+  .tab:hover { color: var(--text); }
   .tab.active { color: var(--amber2); border-bottom-color: var(--amber2); }
 
   /* ── LAYOUT ── */
@@ -75,20 +75,20 @@
 
   /* ── SERIES / CLASS SELECTORS ── */
   .selector-group { margin-bottom: 16px; }
-  .selector-label { font-family: 'Source Code Pro', monospace; font-size: 9px; letter-spacing: 3px; color: var(--text3); text-transform: uppercase; margin-bottom: 8px; }
+  .selector-label { font-family: 'Source Code Pro', monospace; font-size: 9px; letter-spacing: 3px; color: var(--text2); text-transform: uppercase; margin-bottom: 8px; font-weight: 700; }
   .btn-row { display: flex; gap: 6px; flex-wrap: wrap; }
   .btn {
     padding: 8px 16px;
     background: var(--bg3);
-    color: var(--text3);
+    color: var(--text2);
     border: 1px solid var(--border);
     border-radius: 3px;
     cursor: pointer;
     font-family: 'Source Code Pro', monospace;
-    font-size: 10px; letter-spacing: 1px;
+    font-size: 10px; letter-spacing: 1px; font-weight: 600;
     transition: all 0.12s;
   }
-  .btn:hover { color: var(--text2); border-color: var(--border2); }
+  .btn:hover { color: var(--text); border-color: var(--border2); }
   .btn.active-det { background: #c8860a22; color: var(--amber2); border-color: var(--amber); }
   .btn.active-ran { background: #2e6b3e22; color: var(--green2); border-color: var(--green); }
   .btn.active-das { background: #1a4a7a22; color: var(--blue2);  border-color: var(--blue);  }
@@ -109,7 +109,7 @@
     display: flex; justify-content: space-between; align-items: flex-start;
   }
   .card-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; }
-  .card-code  { font-family: 'Source Code Pro', monospace; font-size: 10px; color: var(--text3); margin-top: 3px; }
+  .card-code  { font-family: 'Source Code Pro', monospace; font-size: 10px; color: var(--text2); margin-top: 3px; font-weight: 600; }
   .card-body  { padding: 14px 18px; }
 
   .rule-row {
@@ -118,7 +118,7 @@
     font-size: 14px;
   }
   .rule-row:last-child { border-bottom: none; }
-  .rule-label { color: var(--text3); min-width: 160px; flex-shrink: 0; }
+  .rule-label { color: var(--text2); min-width: 160px; flex-shrink: 0; font-weight: 600; }
   .rule-val   { color: var(--text); text-align: right; }
   .rule-val.hl{ color: var(--amber2); font-weight: 600; }
   .rule-val.warn { color: #9a4e00; font-weight: 600; }

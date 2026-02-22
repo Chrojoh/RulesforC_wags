@@ -13,7 +13,7 @@
     --border:    #d8d0c8;
     --border2:   #c8bfb5;
     --amber:     #a06800;
-    --amber2:    #c8860a;
+    --amber2:    #8c6000;
     --amber-dim: #c8860a33;
     --green:     #1e5c30;
     --green2:    #2a7a45;
@@ -21,7 +21,7 @@
     --blue2:     #1e6aad;
     --text:      #1a1612;
     --text2:     #4a4038;
-    --text3:     #7a7068;
+    --text3:     #5c5248;
     --birch-bg:  #e8f5d8; --birch-b: #3a8a20; --birch-t: #2a6a10;
     --cyp-bg:    #d8eef8; --cyp-b:   #1a7aaa; --cyp-t:   #0a5a8a;
     --clove-bg:  #f8d8e8; --clove-b: #aa2060; --clove-t: #8a0a40;
@@ -121,8 +121,8 @@
   .rule-label { color: var(--text3); min-width: 160px; flex-shrink: 0; }
   .rule-val   { color: var(--text); text-align: right; }
   .rule-val.hl{ color: var(--amber2); font-weight: 600; }
-  .rule-val.warn { color: #ff9f43; font-weight: 600; }
-  .rule-val.danger { color: #ff6b6b; font-weight: 600; }
+  .rule-val.warn { color: #9a4e00; font-weight: 600; }
+  .rule-val.danger { color: #c0392b; font-weight: 600; }
 
   .scent-pill {
     display: inline-block;
@@ -750,19 +750,19 @@ const CLASSES = {
 };
 
 const SERIES = {
-  Detective: { color:"#c8860a", accent:"#f5a623", activeClass:"active-det",
+  Detective: { color:"#8c6000", accent:"#7a5200", activeClass:"active-det",
     classes:["patrol1","detective2","investigator3","superSleuth4","privateInvestigator","detectiveDiversions"] },
-  Ranger:    { color:"#2e6b3e", accent:"#4caf73", activeClass:"active-ran",
+  Ranger:    { color:"#2e6b3e", accent:"#1e5c30", activeClass:"active-ran",
     classes:["ranger1","ranger2","ranger3","ranger4","ranger5"] },
-  Dasher:    { color:"#1a4a7a", accent:"#3a8fd4", activeClass:"active-das",
+  Dasher:    { color:"#1a4a7a", accent:"#1a4a7a", activeClass:"active-das",
     classes:["dasher3","dasher4","dasher5","dasher6"] },
 };
 
 const SCENT_META = {
-  Birch:      {bg:"#2d4a1e",border:"#6abf45",text:"#a8e063",label:"B"},
-  Cypress:    {bg:"#1e3a4a",border:"#45a0bf",text:"#63c8e0",label:"Cy"},
-  "Clove Bud":{bg:"#4a1e2d",border:"#bf4570",text:"#e063a0",label:"CL"},
-  Anise:      {bg:"#3a2d1e",border:"#bf8a45",text:"#e0b463",label:"A"},
+  Birch:      {bg:"#2d4a1e",border:"#6abf45",text:"#a8e063",darkText:"#2a6a10",label:"B"},
+  Cypress:    {bg:"#1e3a4a",border:"#45a0bf",text:"#63c8e0",darkText:"#0a5a8a",label:"Cy"},
+  "Clove Bud":{bg:"#4a1e2d",border:"#bf4570",text:"#e063a0",darkText:"#8a0a40",label:"CL"},
+  Anise:      {bg:"#3a2d1e",border:"#bf8a45",text:"#e0b463",darkText:"#8a4a00",label:"A"},
 };
 
 // ── STATE ────────────────────────────────────────────────────
@@ -834,7 +834,7 @@ function renderRules(classKey) {
   const scentPills=allScents.map(sc=>{
     const m=SCENT_META[sc];
     const avail=rule.scents.includes(sc);
-    return `<span class="scent-pill" style="background:${avail?m.bg:'#e8e4e0'};border:1px solid ${avail?m.border:'#c8c0b8'};color:${avail?m.text:'#a8a098'};text-decoration:${avail?'none':'line-through'}">${sc}</span>`;
+    return `<span class="scent-pill" style="background:${avail?m.bg:'#e8e4e0'};border:1px solid ${avail?m.border:'#c8c0b8'};color:${avail?m.text:'#4a4238'};text-decoration:${avail?'none':'line-through'}">${sc}</span>`;
   }).join('');
 
   // Time
@@ -842,7 +842,7 @@ function renderRules(classKey) {
 
   // Hides
   const hidesStr = rule.unknownCount
-    ? `${rule.hideRange[0]}–${rule.hideRange[1]} <span style="color:#ff9f43">(unknown to handler)</span>`
+    ? `${rule.hideRange[0]}–${rule.hideRange[1]} <span style="color:#9a4e00">(unknown to handler)</span>`
     : rule.hides;
 
   // Search area
@@ -1173,7 +1173,7 @@ function renderSetupGrid() {
         div.classList.add('handler');
         if(c===0){
           const lbl=document.createElement('span');
-          lbl.style.cssText=`font-family:'Source Code Pro',monospace;font-size:7px;color:#f5a623;position:absolute;left:2px;top:2px;`;
+          lbl.style.cssText=`font-family:'Source Code Pro',monospace;font-size:7px;color:#8c6000;position:absolute;left:2px;top:2px;`;
           lbl.textContent='HANDLER LINE';
           div.appendChild(lbl);
         }
@@ -1189,7 +1189,7 @@ function renderSetupGrid() {
         div.style.border=cell.isDistraction?'1px solid #ff6b6b':'1px solid #2a2420';
         if(cell.isDistraction){
           const db=document.createElement('span');
-          db.style.cssText='position:absolute;top:1px;right:2px;font-family:\'Source Code Pro\',monospace;font-size:7px;color:#ff6b6b;';
+          db.style.cssText='position:absolute;top:1px;right:2px;font-family:\'Source Code Pro\',monospace;font-size:7px;color:#c0392b;font-weight:700;';
           db.textContent='D';
           div.appendChild(db);
         }
@@ -1271,13 +1271,17 @@ function renderSidePanel(data, rule, s) {
   }).join('');
 
   // Legend
-  const legendHTML=[
-    {bg:'#f5f2ee',border:'#c8c0b8',label:'Item / Box / Object',icon:'▽'},
-    {bg:'#2a2412',border:'#ff6b6b',label:'Distraction item',icon:'D'},
-    {bg:'repeating-linear-gradient(90deg,#f5a62318 0,#f5a62318 4px,transparent 4px,transparent 8px)',border:'#f5a623',label:'Handler line',icon:''},
-    {bg:'repeating-linear-gradient(90deg,#3a8fd418 0,#3a8fd418 4px,transparent 4px,transparent 8px)',border:'#3a8fd4',label:'Start line',icon:''},
-  ].map(l=>`<div class="legend-row">
-    <div class="legend-swatch" style="background:${l.bg};border:1px solid ${l.border}"></div>
+  const legendEntries=[
+    {bg:'#f8f6f3',border:'#d8d0c8',icon:'',label:'Empty / Search area'},
+    {bg:'#ffffff',border:'#2a2420',icon:'<span style="color:#7a5a20;font-size:13px;line-height:1">□</span>',label:'Box / Container'},
+    {bg:'#ffffff',border:'#2a2420',icon:'<span style="font-size:11px;line-height:1">🪑</span>',label:'Chair'},
+    {bg:'#ffffff',border:'#2a2420',icon:'<span style="color:#1e5c30;font-size:13px;line-height:1">▽</span>',label:'Item / Object'},
+    {bg:'#ffffff',border:'#c0392b',icon:'<span style="color:#c0392b;font-size:10px;font-weight:700;font-family:\'Source Code Pro\',monospace">D</span>',label:'Distraction item'},
+    {bg:'repeating-linear-gradient(90deg,#c8860a18 0,#c8860a18 4px,transparent 4px,transparent 8px)',border:'#a06800',icon:'',label:'Handler line'},
+    {bg:'repeating-linear-gradient(90deg,#1e6aad18 0,#1e6aad18 4px,transparent 4px,transparent 8px)',border:'#1e6aad',icon:'',label:'Start line'},
+  ];
+  const legendHTML=legendEntries.map(l=>`<div class="legend-row">
+    <div class="legend-swatch" style="background:${l.bg};border:1px solid ${l.border};display:flex;align-items:center;justify-content:center">${l.icon}</div>
     <span>${l.label}</span>
   </div>`).join('');
 
@@ -1286,7 +1290,7 @@ function renderSidePanel(data, rule, s) {
     const m=SCENT_META[sc];
     return `<div class="legend-row">
       <div class="legend-swatch" style="background:${m.bg};border:1px solid ${m.border}"></div>
-      <span style="color:${m.text}">${sc} (${m.label})</span>
+      <span style="color:${m.darkText};font-weight:600">${sc} (${m.label})</span>
     </div>`;
   }).join('');
 

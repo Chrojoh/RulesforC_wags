@@ -749,7 +749,7 @@ const SERIES = {
 const SCENT_META = {
   Birch:      {bg:"#2d4a1e",border:"#6abf45",text:"#a8e063",label:"B"},
   Cypress:    {bg:"#1e3a4a",border:"#45a0bf",text:"#63c8e0",label:"Cy"},
-  "Clove Bud":{bg:"#4a1e2d",border:"#bf4570",text:"#e063a0",label:"CL"},
+  "Clove Bud":{bg:"#4a1e2d",border:"#bf4570",text:"#f2182e",label:"CL"},
   Anise:      {bg:"#3a2d1e",border:"#bf8a45",text:"#e0b463",label:"A"},
 };
 
@@ -822,7 +822,7 @@ function renderRules(classKey) {
   const scentPills=allScents.map(sc=>{
     const m=SCENT_META[sc];
     const avail=rule.scents.includes(sc);
-    return `<span class="scent-pill" style="background:${avail?m.bg+'88':'#1a1714'};border:1px solid ${avail?m.border:'#2a2520'};color:${avail?m.text:'#3a3530'};text-decoration:${avail?'none':'line-through'}">${sc}</span>`;
+    return `<span class="scent-pill" style="background:${avail?m.bg+'88':'#f7e7d7'};border:1px solid ${avail?m.border:'#2a2520'};color:${avail?m.text:'#3a3530'};text-decoration:${avail?'none':'line-through'}">${sc}</span>`;
   }).join('');
 
   // Time

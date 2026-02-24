@@ -452,6 +452,7 @@
     <div class="header-title">Scent · Rally · Obedience</div>
     <div class="header-sub">Rules & Course Reference — v4.1 · 2024</div>
   </div>
+  <button id="pwa-install-btn" onclick="pwaInstall()" style="display:none;background:#2a2a2a;border:1px solid #555;color:#ccc;padding:6px 14px;border-radius:6px;font-size:12px;cursor:pointer;flex-shrink:0;">⬇ Install App</button>
   <div class="header-badge">
     15 CLASSES<br>
     3 SERIES<br>
@@ -4111,6 +4112,28 @@ function renderGrabBagRules(rule, color, panel) {
 }
 
 initRallyPage();
+
+// ── PWA Install prompt ────────────────────────────────────────────────────────
+let _pwaPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  _pwaPrompt = e;
+  const btn = document.getElementById('pwa-install-btn');
+  if (btn) btn.style.display = 'inline-block';
+});
+function pwaInstall() {
+  if (!_pwaPrompt) return;
+  _pwaPrompt.prompt();
+  _pwaPrompt.userChoice.then(() => {
+    _pwaPrompt = null;
+    const btn = document.getElementById('pwa-install-btn');
+    if (btn) btn.style.display = 'none';
+  });
+}
+window.addEventListener('appinstalled', () => {
+  const btn = document.getElementById('pwa-install-btn');
+  if (btn) btn.style.display = 'none';
+});
 </script>
 </body>
 </html>

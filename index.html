@@ -6,7 +6,29 @@
 <title>C-WAGS Rules Reference — Scent, Rally & Obedience</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1a1a1a">
-<script>if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');</script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').then(reg => {
+    // Force the waiting service worker to activate immediately
+    reg.update();
+    if (reg.waiting) reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+    reg.addEventListener('updatefound', () => {
+      const newSW = reg.installing;
+      newSW.addEventListener('statechange', () => {
+        if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+          newSW.postMessage({ type: 'SKIP_WAITING' });
+          window.location.reload();
+        }
+      });
+    });
+  });
+  // Reload once the new service worker takes control
+  let refreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!refreshing) { refreshing = true; window.location.reload(); }
+  });
+}
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Code+Pro:wght@400;600&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -1579,10 +1601,9 @@ function renderRallyRules(classKey) {
           <span style="background:#f5f0e8;border:1px solid #d0c8b8;color:#4a4038;
             font-family:'Source Code Pro',monospace;font-size:10px;padding:3px 10px;border-radius:3px;">
             ${rule.ringMin.toLocaleString()}–${rule.ringMax.toLocaleString()} sq ft ring</span>
-          ${rule.timeLimit
-            ? `<span style="background:#2a1a3a;border:1px solid #9f6fff44;color:#c09fff;
-                font-family:'Source Code Pro',monospace;font-size:10px;padding:3px 10px;border-radius:3px;">
-                ⏱ ${rule.timeLimit}</span>` : ''}
+          <span style="background:#2a1a3a;border:1px solid #9f6fff44;color:#c09fff;
+            font-family:'Source Code Pro',monospace;font-size:10px;padding:3px 10px;border-radius:3px;">
+            ⏱ ${rule.noHalts ? '2 min standard / 3 min maximum' : '3 min standard / 4 min maximum'}</span>
           ${rule.noHalts
             ? `<span style="background:#3a1a1a;border:1px solid #ff6b6b44;color:#ff6b6b;
                 font-family:'Source Code Pro',monospace;font-size:10px;padding:3px 10px;border-radius:3px;">
@@ -1607,9 +1628,8 @@ function renderRallyRules(classKey) {
             <span class="rule-val hl">${rule.qualScore}+ points of 100</span></div>
           <div class="rule-row"><span class="rule-label">Leash</span>
             <span class="rule-val">${rule.leash}</span></div>
-          ${rule.timeLimit
-            ? `<div class="rule-row"><span class="rule-label">Time Limit</span>
-                <span class="rule-val warn">${rule.timeLimit}</span></div>` : ''}
+          <div class="rule-row"><span class="rule-label">Time Limit</span>
+              <span class="rule-val warn">${rule.noHalts ? '2 min standard / 3 min maximum' : '3 min standard / 4 min maximum'}</span></div>
           ${rule.rightSideMax !== null
             ? `<div class="rule-row"><span class="rule-label">Right-Side Max</span>
                 <span class="rule-val warn">≤${rule.rightSideMax} exercises per course</span></div>` : ''}

@@ -1019,7 +1019,7 @@ Object.assign(CLASSES, {
     titleReq:'4 qualifying scores from at least 2 different judges',
     aceTitle:'CW-SRA (10 additional QQs after class title)',
     minFromOwn:0, ownPool:'Starter',
-    fillFrom:[], noHalts:false, rightSideMax:null, timeLimit:null,
+    fillFrom:[], noHalts:false, rightSideMax:null, timeLimit:'3 min standard / 4 min maximum',
     signPools:['Starter'],
     passCriteria:'Score 70 or more points out of 100.',
     specialRules:[
@@ -1040,7 +1040,7 @@ Object.assign(CLASSES, {
     titleReq:'4 qualifying scores from at least 2 different judges',
     aceTitle:'CW-ARA (10 additional QQs after class title)',
     minFromOwn:8, ownPool:'Advanced',
-    fillFrom:['Starter'], noHalts:false, rightSideMax:null, timeLimit:null,
+    fillFrom:['Starter'], noHalts:false, rightSideMax:null, timeLimit:'3 min standard / 4 min maximum',
     signPools:['Advanced','Starter'],
     passCriteria:'Score 70 or more points out of 100.',
     specialRules:[
@@ -1062,7 +1062,7 @@ Object.assign(CLASSES, {
     titleReq:'4 qualifying scores from at least 2 different judges',
     aceTitle:'CW-PRA (10 additional QQs after class title)',
     minFromOwn:7, ownPool:'Pro',
-    fillFrom:['Advanced','Starter'], noHalts:false, rightSideMax:null, timeLimit:null,
+    fillFrom:['Advanced','Starter'], noHalts:false, rightSideMax:null, timeLimit:'3 min standard / 4 min maximum',
     signPools:['Pro','Advanced','Starter'],
     passCriteria:'Score 70 or more points out of 100.',
     specialRules:[
@@ -1070,7 +1070,7 @@ Object.assign(CLASSES, {
       'Remaining exercises may be drawn from Advanced and Starter pools.',
       'All exercises are performed off-leash.',
       'Ring size increases: 2,400–4,000 sq ft (vs 1,800–3,500 for Starter/Advanced).',
-      'Pro jumps (P9) may be used up to 4 times; max 2 consecutive.',
+      'Pro jumps (P9) may be used up to 2 consecutive times; handler must maintain 6ft distance from jump.',
       'Leave Dog exercises must be immediately followed by a recall/return exercise.',
       'Moving Leave Dog (PR7/PR8): handler must NOT pause after cueing dog to stay.',
     ]
@@ -1084,7 +1084,7 @@ Object.assign(CLASSES, {
     titleReq:'4 qualifying scores from at least 2 different judges',
     aceTitle:'CW-ARFA (10 additional QQs after class title)',
     minFromOwn:8, ownPool:'ARF',
-    fillFrom:['Advanced','Starter'], noHalts:false, rightSideMax:4, timeLimit:null,
+    fillFrom:['Advanced','Starter'], noHalts:false, rightSideMax:4, timeLimit:'3 min standard / 4 min maximum',
     signPools:['ARF','Advanced','Starter'],
     passCriteria:'Score 70 or more points out of 100.',
     specialRules:[
@@ -1093,7 +1093,7 @@ Object.assign(CLASSES, {
       '⚠ Maximum 4 exercises with the dog heeling on the RIGHT side per course.',
       'Side Switch (R12) is NOT numbered — it is added to an eligible exercise.',
       'Freestyle Short (R17) counts as 4 exercises; pass/fail scored 20 of 30 pts.',
-      'Tunnel (R10) and Table (R11) are trial-host options — may not always be available.',
+      'Tunnel (R10), Table (R11), and Pause Box (R18) are trial-host options — may not always be available.',
       'ARF Jumps (APR9) may be used up to 3 times; min 15 ft between consecutive jumps.',
     ]
   },
@@ -1134,7 +1134,7 @@ Object.assign(CLASSES, {
     specialRules:[
       '⚠ NO HALT EXERCISES — all stationary/halt signs are forbidden.',
       'At least 6 exercises must be from the Zoom 1.5 exclusive pool.',
-      'Zoom 1.5 adds: A9 (Jump), A10, A11 (Figure 8s), PR3, A17–A24 (recall/handler turns), R2.',
+      'Zoom 1.5 adds: A9 (Jump), A10, A11 (Figure 8s), PR3, A17, A18, A21–A24 (recall/handler turns), R2.',
       'All exercises are performed off-leash.',
       'Jumps (A9): up to 3 total; 2 consecutive allowed.',
       'Time limit: 2 minutes standard; 1 pt per 10 sec over (max 6 pts); NQ at 3 min.',
@@ -1158,7 +1158,7 @@ Object.assign(CLASSES, {
       'At least 8 exercises must be from the Zoom 2 exclusive pool.',
       '⚠ Maximum 4 exercises with the dog on the RIGHT side per course.',
       'Ring size increases: 2,400–4,000 sq ft.',
-      'Zoom 2 adds: P1/P2 (turn + back), PR4, PR6–PR8 (moving leave), P9/P10, P18, PR22 (broad jump), R5/R10/R16.',
+      'Zoom 2 adds: P1/P2 (turn + back), PR4, PR6–PR8 (moving leave), P9/P10, P18, PR19, PR20, PR22 (broad jump), R5/R10/R16.',
       'Jumps (P9): up to 4 total; max 2 consecutive.',
       'Tunnel (R10): no required handler distance in Zoom 2.',
       'Time limit: 2 minutes standard; 1 pt per 10 sec over (max 6 pts); NQ at 3 min.',
@@ -1618,7 +1618,7 @@ function renderRallyRules(classKey) {
           <div class="rule-row"><span class="rule-label">Sign Spacing</span>
             <span class="rule-val">Min 10 ft between signs</span></div>
           <div class="rule-row"><span class="rule-label">Stationary Limit</span>
-            <span class="rule-val">≤ ~1/3 of total exercises</span></div>
+            <span class="rule-val">${rule.noHalts ? 'No stationary halt exercises permitted; treat pauses allowed (dog must not sit).' : '≤ ~1/3 of total exercises'}</span></div>
           ${rule.noHalts
             ? `<div class="rule-row"><span class="rule-label">Halt Exercises</span>
                 <span class="rule-val danger">Not permitted</span></div>` : ''}
@@ -1676,16 +1676,18 @@ function renderRallyRules(classKey) {
           <div class="rule-row"><span class="rule-label">1-pt errors</span>
             <span class="rule-val" style="font-size:12px;text-align:right;">Heeling errors, out of position, slight movement on leave, foot-cue (1–3 pts), handler error (1–5 pts)</span></div>
           <div class="rule-row"><span class="rule-label">3-pt errors</span>
-            <span class="rule-val" style="font-size:12px;text-align:right;">Extra cue, cone/sign knocked over, retry, pivot as circle, pace not maintained, excessive barking</span></div>
+            <span class="rule-val" style="font-size:12px;text-align:right;">Extra cue, cone/sign knocked over (deducted from TOTAL course score, not exercise cap), retry, pivot as circle, pace not maintained, excessive barking</span></div>
+          <div class="rule-row"><span class="rule-label">4-pt errors</span>
+            <span class="rule-val" style="font-size:12px;text-align:right;">Handler drops food (deducted from total course score)</span></div>
           <div class="rule-row"><span class="rule-label">5-pt errors</span>
-            <span class="rule-val" style="font-size:12px;text-align:right;">Wrong order on equipment, missed/unindicated position change, loud cue, pausing on Moving Leave Dog</span></div>
+            <span class="rule-val" style="font-size:12px;text-align:right;">Wrong order on equipment, missed/unindicated position change, loud cue, pausing on Moving Leave Dog; leaving ring without leash attached but returning</span></div>
           <div class="rule-row"><span class="rule-label">10-pt errors</span>
             <span class="rule-val" style="font-size:12px;text-align:right;">Dog not responding to come on first cue; stopping on Moving Leave Dog; dog not completing equipment path</span></div>
           <div class="rule-row"><span class="rule-label">NQ (instant)</span>
             <span class="rule-val danger" style="text-align:right;">Dog changes position after handler leaves heel on Leave Dog; food bowl tipped; dropped jump bar</span></div>
           ${rule.timeLimit
             ? `<div class="rule-row"><span class="rule-label">Over-time penalty</span>
-                <span class="rule-val warn" style="text-align:right;">1 pt per 10 sec over; max 6 pts; NQ at 3 min</span></div>` : ''}
+                <span class="rule-val warn" style="text-align:right;">${rule.noHalts ? '1 pt per 10 sec over 2 min; max 6 pts; NQ at 3 min' : '1 pt per 10 sec over 3 min; max 6 pts; NQ at 4 min'}</span></div>` : ''}
           <div class="rule-row"><span class="rule-label">Pass Criteria</span>
             <span class="rule-val hl">70+ pts of 100</span></div>
         </div>
@@ -2546,10 +2548,10 @@ const POOL_KEY = {
 };
 
 const RALLY_CLASSES_CFG = {
-  'Starter':  {min:17,max:20,ringMin:1800,ringMax:3500,minFromOwn:0, ownKey:'Starter', noHalts:false,timeLimit:null,   leash:'On-leash (A) or handler choice (B)',rightSideMax:null},
-  'Advanced': {min:18,max:21,ringMin:1800,ringMax:3500,minFromOwn:8, ownKey:'Advanced',noHalts:false,timeLimit:null,   leash:'Off-leash',rightSideMax:null},
-  'Pro':      {min:19,max:22,ringMin:2400,ringMax:4000,minFromOwn:7, ownKey:'Pro',     noHalts:false,timeLimit:null,   leash:'Off-leash',rightSideMax:null},
-  'ARF':      {min:19,max:22,ringMin:2400,ringMax:4000,minFromOwn:8, ownKey:'ARF',     noHalts:false,timeLimit:null,   leash:'Off-leash',rightSideMax:4},
+  'Starter':  {min:17,max:20,ringMin:1800,ringMax:3500,minFromOwn:0, ownKey:'Starter', noHalts:false,timeLimit:'3 min (max 4 min)',   leash:'On-leash (A) or handler choice (B)',rightSideMax:null},
+  'Advanced': {min:18,max:21,ringMin:1800,ringMax:3500,minFromOwn:8, ownKey:'Advanced',noHalts:false,timeLimit:'3 min (max 4 min)',   leash:'Off-leash',rightSideMax:null},
+  'Pro':      {min:19,max:22,ringMin:2400,ringMax:4000,minFromOwn:7, ownKey:'Pro',     noHalts:false,timeLimit:'3 min (max 4 min)',   leash:'Off-leash',rightSideMax:null},
+  'ARF':      {min:19,max:22,ringMin:2400,ringMax:4000,minFromOwn:8, ownKey:'ARF',     noHalts:false,timeLimit:'3 min (max 4 min)',   leash:'Off-leash',rightSideMax:4},
   'Zoom 1':   {min:15,max:18,ringMin:1800,ringMax:3500,minFromOwn:0, ownKey:'Zoom1',   noHalts:true, timeLimit:'2 min (max 3 min)', leash:'On or off (handler choice)',rightSideMax:null},
   'Zoom 1.5': {min:15,max:20,ringMin:1800,ringMax:3500,minFromOwn:6, ownKey:'Zoom15',  noHalts:true, timeLimit:'2 min (max 3 min)', leash:'Off-leash',rightSideMax:null},
   'Zoom 2':   {min:17,max:20,ringMin:2400,ringMax:4000,minFromOwn:8, ownKey:'Zoom2',   noHalts:true, timeLimit:'2 min (max 3 min)', leash:'Off-leash',rightSideMax:4},
@@ -2557,7 +2559,7 @@ const RALLY_CLASSES_CFG = {
 
 // IDs of halt/stationary-start exercises forbidden in Zoom classes
 const HALT_SIGN_IDS = new Set(['S5','S6','S9','S10','S11','S12','S13','S30',
-  'A1','A2','A4','A5','A6','A7','A8','A20','P11','P12','R1','R11','R18']);
+  'A1','A2','A4','A5','A6','A7','A8','P11','P12','R1','R11','R18']);
 
 const RALLY_SIGNS_DATA = [
   // ── STARTER ──
@@ -2585,8 +2587,8 @@ const RALLY_SIGNS_DATA = [
   {id:'S22',name:'Zig',                      pool:['Starter','Advanced','Pro','ARF','Zoom1','Zoom15','Zoom2'],stat:false,front:false,rs:false,ss:false,multi:false,equip:null,isZig:true,hdg:0},
   {id:'S23',name:'360° Right',               pool:['Starter','Advanced','Pro','ARF','Zoom1','Zoom15','Zoom2'],stat:false,front:false,rs:false,ss:false,multi:true, equip:null,hdg:0},
   {id:'S24',name:'360° Left',                pool:['Starter','Advanced','Pro','ARF','Zoom1','Zoom15','Zoom2'],stat:false,front:false,rs:true, ss:false,multi:true, equip:null,hdg:0},
-  {id:'S25',name:'Serpentine Weave',         pool:['Starter','Advanced','Pro','ARF','Zoom1','Zoom15','Zoom2'],stat:false,front:false,rs:false,ss:false,multi:false,equip:'cones (4)',hdg:0},
-  {id:'S26',name:'Straight Figure 8',        pool:['Starter','Advanced','Pro','ARF','Zoom1','Zoom15','Zoom2'],stat:false,front:false,rs:false,ss:false,multi:false,equip:'cones (2)',hdg:0},
+  {id:'S25',name:'Serpentine Weave',         pool:['Starter','Advanced','Pro','ARF','Zoom1','Zoom15','Zoom2'],stat:false,front:false,rs:false,ss:false,multi:true, equip:'cones (4)',hdg:0},
+  {id:'S26',name:'Straight Figure 8',        pool:['Starter','Advanced','Pro','ARF','Zoom1','Zoom15','Zoom2'],stat:false,front:false,rs:true, ss:false,multi:false,equip:'cones (4)',hdg:0},
   {id:'S27',name:'Spiral Right',             pool:['Starter','Advanced','Pro','ARF','Zoom1','Zoom15','Zoom2'],stat:false,front:false,rs:true, ss:false,multi:false,equip:'cones (3)',hdg:0},
   {id:'S28',name:'Spiral Left',              pool:['Starter','Advanced','Pro','ARF','Zoom1','Zoom15','Zoom2'],stat:false,front:false,rs:true, ss:false,multi:false,equip:'cones (3)',hdg:0},
   {id:'S29',name:'Cone Figure 8',            pool:['Starter','Advanced','Pro','ARF','Zoom1','Zoom15','Zoom2'],stat:false,front:false,rs:true, ss:false,multi:true, equip:'cones (2)',hdg:0},
@@ -2602,7 +2604,7 @@ const RALLY_SIGNS_DATA = [
   {id:'A3', name:'Left About Turn',           pool:['Advanced','Pro','ARF','Zoom1','Zoom15','Zoom2'],          stat:false,front:false,rs:false,ss:false,multi:false,equip:null,hdg:180},
   {id:'A4', name:'Halt – 180° Pivot Right – Fwd',pool:['Advanced','Pro','ARF'],                              stat:false,front:false,rs:false,ss:false,multi:false,equip:null,hdg:180},
   {id:'A5', name:'Halt – Stand – Sit',        pool:['Advanced','Pro','ARF'],                                   stat:true, front:false,rs:true, ss:false,multi:false,equip:null,hdg:0},
-  {id:'A6', name:'Halt – Stand – Down',       pool:['Advanced','Pro','ARF'],                                   stat:true, front:false,rs:true, ss:false,multi:false,equip:null,hdg:0},
+  {id:'A6', name:'Halt – Stand – Down',       pool:['Advanced','Pro','ARF'],                                   stat:true, front:false,rs:false,ss:false,multi:false,equip:null,hdg:0},
   {id:'A7', name:'Halt – Down – Sit',         pool:['Advanced','Pro','ARF'],                                   stat:true, front:false,rs:true, ss:false,multi:false,equip:null,hdg:0},
   {id:'A8', name:'Halt – Fast From Sit',      pool:['Advanced','Pro','ARF'],                                   stat:false,front:false,rs:false,ss:false,multi:false,equip:null,isPace:true,hdg:0},
   {id:'A9', name:'Jump – Upright',            pool:['Advanced','Pro','ARF','Zoom15','Zoom2'],                  stat:false,front:false,rs:true, ss:true, multi:true, equip:'jump',hdg:0},
@@ -2611,22 +2613,22 @@ const RALLY_SIGNS_DATA = [
   {id:'A12',name:'Finish Right',              pool:['Advanced','Pro','ARF'],                                   stat:false,front:true, rs:false,ss:false,multi:false,equip:null,isFrontExercise:true,hdg:0},
   {id:'A13',name:'Finish Left',               pool:['Advanced','Pro','ARF'],                                   stat:false,front:true, rs:false,ss:false,multi:false,equip:null,isFrontExercise:true,hdg:0},
   {id:'A14',name:'Halt – Leave Dog',          pool:['Advanced','Pro','ARF'],                                   stat:true, front:false,rs:true, ss:true, multi:true, equip:null,isLeave:true,hdg:0},
-  {id:'A15',name:'Turn – Down, Sit, Front',   pool:['Advanced','Pro','ARF'],                                   stat:false,front:false,rs:false,ss:false,multi:false,equip:null,isRecall:true,hdg:0},
-  {id:'A16',name:'Turn – Call Front',         pool:['Advanced','Pro','ARF'],                                   stat:false,front:false,rs:false,ss:false,multi:false,equip:null,isRecall:true,hdg:0},
-  {id:'A17',name:'Call to Heel',              pool:['Advanced','Pro','ARF','Zoom15','Zoom2'],                  stat:false,front:true, rs:false,ss:false,multi:false,equip:null,hdg:0},
+  {id:'A15',name:'Turn – Down, Sit, Front',   pool:['Advanced','Pro','ARF'],                                   stat:true, front:false,rs:false,ss:false,multi:false,equip:null,isRecall:true,hdg:0},
+  {id:'A16',name:'Turn – Call Front',         pool:['Advanced','Pro','ARF'],                                   stat:true, front:false,rs:false,ss:false,multi:false,equip:null,isRecall:true,hdg:0},
+  {id:'A17',name:'Call to Heel',              pool:['Advanced','Pro','ARF','Zoom15','Zoom2'],                  stat:false,front:false,rs:false,ss:false,multi:false,equip:null,isRecall:true,hdg:0},
   {id:'A18',name:'Return to Dog',             pool:['Advanced','Pro','ARF','Zoom15','Zoom2'],                  stat:false,front:false,rs:false,ss:false,multi:false,equip:null,isRecall:true,hdg:0},
-  {id:'A19',name:'Handler About Turn – Fwd',  pool:['Advanced','Pro','ARF','Zoom15','Zoom2'],                  stat:false,front:true, rs:false,ss:false,multi:false,equip:null,hdg:0},
-  {id:'A20',name:'Halt – Stand (Adv)',        pool:['Advanced','Pro','ARF'],                                   stat:true, front:false,rs:false,ss:false,multi:false,equip:null,hdg:0},
+  {id:'A19',name:'Handler About Turn – Fwd',  pool:['Advanced','Pro','ARF','Zoom2'],                          stat:false,front:false,rs:false,ss:false,multi:false,equip:null,hdg:0},
+  {id:'A20',name:'Down',                      pool:['Advanced','Pro','ARF'],                                   stat:true, front:false,rs:false,ss:false,multi:false,equip:null,hdg:0},
   {id:'A21',name:'Zig Zag Right',             pool:['Advanced','Pro','ARF','Zoom15','Zoom2'],                  stat:false,front:false,rs:false,ss:false,multi:false,equip:null,hdg:0},
-  {id:'A22',name:'Zig Zag Left',              pool:['Advanced','Pro','ARF','Zoom15','Zoom2'],                  stat:false,front:false,rs:false,ss:false,multi:false,equip:null,hdg:0},
-  {id:'A23',name:'Stand – Walk Around',       pool:['Advanced','Pro','ARF','Zoom15','Zoom2'],                  stat:false,front:false,rs:false,ss:false,multi:false,equip:null,hdg:0},
-  {id:'A24',name:'Stand – Leave Dog',         pool:['Advanced','Pro','ARF','Zoom15','Zoom2'],                  stat:false,front:false,rs:true, ss:true, multi:true, equip:null,isLeave:true,hdg:0},
+  {id:'A22',name:'Zig Zag Left',              pool:['Advanced','Pro','ARF','Zoom15','Zoom2'],                  stat:false,front:false,rs:true, ss:false,multi:false,equip:null,hdg:0},
+  {id:'A23',name:'Stand – Walk Around',       pool:['Advanced','Pro','ARF','Zoom15','Zoom2'],                  stat:true, front:false,rs:true, ss:false,multi:false,equip:null,hdg:0},
+  {id:'A24',name:'Stand – Leave Dog',         pool:['Advanced','Pro','ARF','Zoom15','Zoom2'],                  stat:false,front:false,rs:true, ss:true, multi:false,equip:null,isLeave:true,hdg:0},
   // ── PRO ──
-  {id:'P1', name:'Left Turn – Back 2 Steps',  pool:['Pro','Zoom2'],                                           stat:false,front:false,rs:false,ss:false,multi:true, equip:null,hdg:-90},
-  {id:'P2', name:'Right Turn – Back 2 Steps', pool:['Pro','Zoom2'],                                           stat:false,front:false,rs:false,ss:false,multi:true, equip:null,hdg:90},
+  {id:'P1', name:'Left Turn – Back 2 Steps',  pool:['Pro','Zoom2'],                                           stat:false,front:false,rs:false,ss:false,multi:false,equip:null,hdg:-90},
+  {id:'P2', name:'Right Turn – Back 2 Steps', pool:['Pro','Zoom2'],                                           stat:false,front:false,rs:false,ss:false,multi:false,equip:null,hdg:90},
   {id:'PR3',name:'Double Left About',         pool:['Pro','ARF','Zoom15','Zoom2'],                             stat:false,front:false,rs:false,ss:false,multi:false,equip:null,hdg:0},
-  {id:'PR4',name:'Heel Back 3 Steps',         pool:['Pro','ARF','Zoom2'],                                      stat:false,front:false,rs:false,ss:false,multi:true, equip:null,hdg:0},
-  {id:'P5', name:'Halt – Leave Running – Call Front',pool:['Pro','ARF'],                                      stat:false,front:false,rs:true, ss:true, multi:false,equip:null,isLeave:true,hdg:0},
+  {id:'PR4',name:'Heel Back 3 Steps',         pool:['Pro','ARF','Zoom2'],                                      stat:false,front:false,rs:false,ss:false,multi:false,equip:null,hdg:0},
+  {id:'P5', name:'Halt – Leave Running – Call Front',pool:['Pro'],                                             stat:true, front:false,rs:false,ss:true, multi:false,equip:null,isLeave:true,hdg:0},
   {id:'PR6',name:'Moving Stand – Walk Around',pool:['Pro','ARF','Zoom2'],                                      stat:false,front:false,rs:true, ss:true, multi:false,equip:null,hdg:0},
   {id:'PR7',name:'Moving Stand – Leave Dog',  pool:['Pro','ARF','Zoom2'],                                      stat:false,front:false,rs:true, ss:true, multi:true, equip:null,isLeave:true,hdg:0},
   {id:'PR8',name:'Moving Down – Leave Dog',   pool:['Pro','ARF','Zoom2'],                                      stat:false,front:false,rs:true, ss:true, multi:true, equip:null,isLeave:true,hdg:0},
@@ -2634,19 +2636,20 @@ const RALLY_SIGNS_DATA = [
   {id:'P10',name:'Off-Set Figure 8 (Pro)',    pool:['Pro','Zoom2'],                                            stat:false,front:false,rs:false,ss:false,multi:false,equip:'treat bowls',hdg:0},
   {id:'P11',name:'Halt – 180° Pivot Left – Halt',pool:['Pro'],                                                stat:true, front:false,rs:false,ss:false,multi:false,equip:null,hdg:180},
   {id:'P12',name:'Halt – Step Right – Halt',  pool:['Pro'],                                                    stat:true, front:false,rs:false,ss:false,multi:false,equip:null,hdg:0},
-  {id:'P13',name:'Finish or Fwd – L or R',   pool:['Pro'],                                                    stat:false,front:true, rs:false,ss:false,multi:false,equip:null,hdg:0},
-  {id:'P14',name:'Turn – Drop on Recall',     pool:['Pro'],                                                    stat:false,front:false,rs:false,ss:false,multi:false,equip:null,isRecall:true,hdg:0},
-  {id:'P15',name:'Turn – Down, Sit, Front (Pro)',pool:['Pro'],                                                 stat:false,front:false,rs:false,ss:false,multi:false,equip:null,isRecall:true,hdg:0},
-  {id:'P16',name:'Turn – Send Over Jump',     pool:['Pro'],                                                    stat:false,front:false,rs:false,ss:false,multi:false,equip:'jump',isRecall:true,hdg:0},
-  {id:'P17',name:'Turn – Call to Heel – Halt',pool:['Pro'],                                                    stat:false,front:false,rs:false,ss:false,multi:false,equip:null,isRecall:true,hdg:0},
-  {id:'P18',name:'Turn – Call to Heel – Fwd', pool:['Pro','Zoom2'],                                            stat:false,front:false,rs:false,ss:false,multi:true, equip:null,isRecall:true,hdg:0},
-  {id:'PR19',name:'Lateral Side-Step Right',  pool:['Pro','ARF','Zoom2'],                                      stat:false,front:false,rs:true, ss:false,multi:false,equip:null,hdg:0},
+  {id:'P13',name:'Finish or Fwd – L or R',   pool:['Pro'],                                                    stat:false,front:true, rs:false,ss:false,multi:true, equip:null,hdg:0},
+  {id:'P14',name:'Turn – Drop on Recall',     pool:['Pro'],                                                    stat:true, front:false,rs:false,ss:false,multi:false,equip:null,isRecall:true,hdg:0},
+  {id:'P15',name:'Turn – Down, Sit, Front (Pro)',pool:['Pro'],                                                 stat:true, front:false,rs:false,ss:false,multi:false,equip:null,isRecall:true,hdg:0},
+  {id:'P16',name:'Turn – Send Over Jump',     pool:['Pro'],                                                    stat:true, front:false,rs:false,ss:false,multi:false,equip:'jump',isRecall:true,hdg:0},
+  {id:'P17',name:'Turn – Call to Heel – Halt',pool:['Pro'],                                                    stat:true, front:false,rs:false,ss:false,multi:false,equip:null,isRecall:true,hdg:0},
+  {id:'P18',name:'Turn – Call to Heel – Fwd', pool:['Pro','Zoom2'],                                            stat:false,front:false,rs:false,ss:false,multi:false,equip:null,isRecall:true,hdg:0},
+  {id:'PR19',name:'Lateral Side-Step Right',  pool:['Pro','ARF','Zoom2'],                                      stat:false,front:false,rs:false,ss:false,multi:false,equip:null,hdg:0},
   {id:'PR20',name:'Lateral Side-Step Left',   pool:['Pro','ARF','Zoom2'],                                      stat:false,front:false,rs:true, ss:false,multi:false,equip:null,hdg:0},
+  {id:'P21', name:'Stand – Leave Running – Call to Heel',pool:['Pro'],                                        stat:false,front:false,rs:false,ss:false,multi:false,equip:null,isLeave:true,hdg:0},
   {id:'PR22',name:'Broad Jump',               pool:['Pro','ARF','Zoom2'],                                      stat:false,front:false,rs:true, ss:false,multi:false,equip:'broad jump',hdg:0},
   // ── ARF ──
   {id:'R1', name:'Halt – Step Left – Halt',   pool:['ARF'],                                                    stat:true, front:false,rs:true, ss:false,multi:false,equip:null,hdg:0},
   {id:'R2', name:'Dog Circle Right',           pool:['ARF','Zoom15','Zoom2'],                                   stat:false,front:false,rs:false,ss:false,multi:false,equip:null,hdg:0},
-  {id:'R5', name:'Turn Face Dog – 3 Steps Fwd',pool:['ARF','Zoom2'],                                           stat:false,front:false,rs:false,ss:false,multi:false,equip:null,hdg:0},
+  {id:'R5', name:'Turn Face Dog – 3 Steps Fwd',pool:['ARF','Zoom2'],                                           stat:false,front:false,rs:false,ss:false,multi:false,equip:null,isRecall:true,hdg:0},
   {id:'APR9',name:'Jump – ARF',               pool:['ARF'],                                                    stat:false,front:false,rs:true, ss:true, multi:true, equip:'jump',hdg:0},
   {id:'R10',name:'Tunnel',                    pool:['ARF','Zoom2'],                                             stat:false,front:false,rs:true, ss:true, multi:true, equip:'tunnel',hdg:0},
   {id:'R11',name:'Table',                     pool:['ARF'],                                                     stat:true, front:false,rs:true, ss:false,multi:false,equip:'table',hdg:0},

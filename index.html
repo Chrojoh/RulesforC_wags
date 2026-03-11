@@ -1567,27 +1567,29 @@ function renderRallyRules(classKey) {
   <div class="fade-in">
     <!-- Header card -->
     <div class="card" style="margin-bottom:16px; border-color:${color}44;">
-      <div class="card-header" style="background:${color}12;flex-wrap:wrap;gap:12px;">
-        <div>
-          <div style="font-size:10px;color:${color};font-family:'Source Code Pro',monospace;
-            letter-spacing:3px;text-transform:uppercase;margin-bottom:4px;">${rule.series} Series</div>
-          <div class="card-title">${rule.name}</div>
-          <div class="card-code">${rule.code}</div>
+      <div class="card-header" style="background:${color}12;display:block;padding:14px 18px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;">
+          <div>
+            <div style="font-size:10px;color:${color};font-family:'Source Code Pro',monospace;
+              letter-spacing:3px;text-transform:uppercase;margin-bottom:4px;">${rule.series} Series</div>
+            <div class="card-title">${rule.name}</div>
+            <div class="card-code">${rule.code}</div>
+          </div>
         </div>
-        <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start;">
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;align-items:center;">
           <span style="background:${color}22;border:1px solid ${color};color:${color};
             font-family:'Source Code Pro',monospace;font-size:10px;padding:3px 10px;
-            border-radius:3px;letter-spacing:1px;">${rule.minEx}–${rule.maxEx} exercises</span>
+            border-radius:3px;letter-spacing:1px;white-space:nowrap;">${rule.minEx}–${rule.maxEx} exercises</span>
           <span style="background:#f5f0e8;border:1px solid #d0c8b8;color:#4a4038;
-            font-family:'Source Code Pro',monospace;font-size:10px;padding:3px 10px;border-radius:3px;">
+            font-family:'Source Code Pro',monospace;font-size:10px;padding:3px 10px;border-radius:3px;white-space:nowrap;">
             ${rule.ringMin.toLocaleString()}–${rule.ringMax.toLocaleString()} sq ft ring</span>
           ${rule.timeLimit
             ? `<span style="background:#2a1a3a;border:1px solid #9f6fff44;color:#c09fff;
-                font-family:'Source Code Pro',monospace;font-size:10px;padding:3px 10px;border-radius:3px;">
+                font-family:'Source Code Pro',monospace;font-size:10px;padding:3px 10px;border-radius:3px;white-space:nowrap;">
                 ⏱ ${rule.timeLimit}</span>` : ''}
           ${rule.noHalts
             ? `<span style="background:#3a1a1a;border:1px solid #ff6b6b44;color:#ff6b6b;
-                font-family:'Source Code Pro',monospace;font-size:10px;padding:3px 10px;border-radius:3px;">
+                font-family:'Source Code Pro',monospace;font-size:10px;padding:3px 10px;border-radius:3px;white-space:nowrap;">
                 ⚠ NO HALTS</span>` : ''}
         </div>
       </div>

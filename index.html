@@ -1567,14 +1567,14 @@ function renderRallyRules(classKey) {
   <div class="fade-in">
     <!-- Header card -->
     <div class="card" style="margin-bottom:16px; border-color:${color}44;">
-      <div class="card-header" style="background:${color}12;">
+      <div class="card-header" style="background:${color}12;flex-wrap:wrap;gap:12px;">
         <div>
           <div style="font-size:10px;color:${color};font-family:'Source Code Pro',monospace;
             letter-spacing:3px;text-transform:uppercase;margin-bottom:4px;">${rule.series} Series</div>
           <div class="card-title">${rule.name}</div>
           <div class="card-code">${rule.code}</div>
         </div>
-        <div style="text-align:right;display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
+        <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start;">
           <span style="background:${color}22;border:1px solid ${color};color:${color};
             font-family:'Source Code Pro',monospace;font-size:10px;padding:3px 10px;
             border-radius:3px;letter-spacing:1px;">${rule.minEx}–${rule.maxEx} exercises</span>

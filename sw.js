@@ -1,5 +1,5 @@
 // C-WAGS Rules Reference — standalone, offline-first app shell
-const CACHE_NAME = "cwags-rules-offline-v3";
+const CACHE_NAME = "cwags-rules-offline-v4";
 const APP_ROOT = new URL("./", self.registration.scope);
 const APP_URL = new URL("index.html", APP_ROOT);
 const OPTIONAL_FILES = [

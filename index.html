@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>C-WAGS Rules Reference — Scent, Rally & Obedience</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1a1a1a">\n<meta name="mobile-web-app-capable" content="yes">\n<meta name="apple-mobile-web-app-capable" content="yes">\n<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#1a1a1a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js').then(reg => {
@@ -400,7 +403,7 @@ if ('serviceWorker' in navigator) {
     <div class="header-title">Scent · Rally · Obedience</div>
     <div class="header-sub">Rules & Course Reference — v4.1 · 2024</div>
   </div>
-  <button id="pwa-install-btn" onclick="pwaInstall()" style="display:inline-block;background:#2a2a2a;border:1px solid #777;color:#fff;padding:7px 14px;border-radius:6px;font-size:12px;cursor:pointer;flex-shrink:0;">⬇ Install App</button>
+  <button id="pwa-install-btn" onclick="pwaInstall()" style="display:none;background:#2a2a2a;border:1px solid #777;color:#fff;padding:7px 14px;border-radius:6px;font-size:12px;cursor:pointer;flex-shrink:0;">⬇ Install App</button>
   <div class="header-badge">
     15 CLASSES<br>
     3 SERIES<br>
@@ -3993,11 +3996,20 @@ initRallyPage();
 
 // ── PWA Install prompt ────────────────────────────────────────────────────────
 let _pwaPrompt = null;
+const _pwaInstallButton = document.getElementById('pwa-install-btn');
+const _pwaIsInstalled = () =>
+  window.matchMedia('(display-mode: standalone)').matches ||
+  window.matchMedia('(display-mode: fullscreen)').matches ||
+  navigator.standalone === true;
+
+// Show installation instructions only in a normal browser tab.
+if (_pwaInstallButton) {
+  _pwaInstallButton.style.display = _pwaIsInstalled() ? 'none' : 'inline-block';
+}
 window.addEventListener('beforeinstallprompt', e => {
   e.preventDefault();
   _pwaPrompt = e;
-  const btn = document.getElementById('pwa-install-btn');
-  if (btn) btn.style.display = 'inline-block';
+  if (_pwaInstallButton && !_pwaIsInstalled()) _pwaInstallButton.style.display = 'inline-block';
 });
 function pwaInstall() {
   if (_pwaPrompt) {
@@ -4021,8 +4033,8 @@ function pwaInstall() {
   }
 }
 window.addEventListener('appinstalled', () => {
-  const btn = document.getElementById('pwa-install-btn');
-  if (btn) btn.style.display = 'none';
+  _pwaPrompt = null;
+  if (_pwaInstallButton) _pwaInstallButton.style.display = 'none';
 });
 </script>
 </body>

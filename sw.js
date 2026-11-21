@@ -1,26 +1,35 @@
-// C-WAGS Rules Reference — offline application cache
-const CACHE_NAME = "cwags-rules-offline-v2";
-const APP_FILES = [
-  "./",
-  "./index.html",
-  "./manifest.json",
-  "./icon-192.png",
-  "./icon-512.png"
+// C-WAGS Rules Reference — standalone, offline-first app shell
+const CACHE_NAME = "cwags-rules-offline-v3";
+const APP_ROOT = new URL("./", self.registration.scope);
+const APP_URL = new URL("index.html", APP_ROOT);
+const OPTIONAL_FILES = [
+  new URL("./", APP_ROOT).href,
+  new URL("manifest.json", APP_ROOT).href,
+  new URL("icon-192.png", APP_ROOT).href,
+  new URL("icon-512.png", APP_ROOT).href
 ];
 
 self.addEventListener("install", event => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE_NAME);
-    // Cache the essential app shell. A failed optional asset must not
-    // prevent the service worker from installing.
-    await Promise.all(APP_FILES.map(async path => {
+
+    // The rules and course-map data are embedded in index.html. Cache this
+    // file first: an installation is not complete unless the full app shell
+    // is safely stored for offline launch.
+    const appResponse = await fetch(new Request(APP_URL.href, { cache: "reload" }));
+    if (!appResponse.ok) throw new Error("Unable to cache the C-WAGS app shell.");
+    await cache.put(APP_URL.href, appResponse);
+
+    // These supporting files are useful but must not block app installation.
+    await Promise.all(OPTIONAL_FILES.map(async url => {
       try {
-        const response = await fetch(new Request(path, { cache: "reload" }));
-        if (response.ok) await cache.put(path, response);
+        const response = await fetch(new Request(url, { cache: "reload" }));
+        if (response.ok) await cache.put(url, response);
       } catch (_) {
-        // The page can still be used online; retry on a later visit.
+        // Retry on a later online visit.
       }
     }));
+
     await self.skipWaiting();
   })());
 });
@@ -29,7 +38,7 @@ self.addEventListener("activate", event => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
     await Promise.all(keys
-      .filter(key => key.startsWith("cwags-") && key !== CACHE_NAME)
+      .filter(key => key.startsWith("cwags-rules-") && key !== CACHE_NAME)
       .map(key => caches.delete(key)));
     await self.clients.claim();
   })());
@@ -40,8 +49,7 @@ self.addEventListener("fetch", event => {
   if (request.method !== "GET") return;
 
   const url = new URL(request.url);
-  const appOrigin = self.location.origin;
-  if (url.origin !== appOrigin) return;
+  if (url.origin !== self.location.origin) return;
 
   if (request.mode === "navigate") {
     event.respondWith((async () => {
@@ -53,15 +61,14 @@ self.addEventListener("fetch", event => {
           return response;
         }
       } catch (_) {
-        // Offline: serve the previously cached app.
+        // Offline launch: use the saved app shell.
       }
       return (await cache.match(request)) ||
-        (await cache.match("./index.html")) ||
-        (await cache.match("./")) ||
-        new Response("C-WAGS Rules Reference is not available offline yet. Open it once while connected to the internet, then try again.", {
-          status: 503,
-          headers: { "Content-Type": "text/plain; charset=utf-8" }
-        });
+        (await cache.match(APP_URL.href)) ||
+        new Response(
+          "C-WAGS Rules has not finished its first online setup. Connect to the internet, open the app once, and try again.",
+          { status: 503, headers: { "Content-Type": "text/plain; charset=utf-8" } }
+        );
     })());
     return;
   }
